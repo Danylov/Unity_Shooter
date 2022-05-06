@@ -7,18 +7,21 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int enemiesNumber = 3;
     [SerializeField] private GameObject enemyPrefab;
     private float spawnRange = 8.5f;
+    public float rotationSpeed = 30.0f;
+    private List<GameObject> enemies= new List<GameObject>();
     void Start()
     {
         for (int i = 0; i < enemiesNumber; i++)
         {
-            int randomEnemy = Random.Range(0, enemiesNumber);
-            Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+            GameObject enemy = Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+            enemy.transform.SetParent(transform);
+            enemies.Add(enemy);
         } 
     }
 
     void Update()
     {
-        
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
     }
     private Vector3 GenerateSpawnPosition()
     {
